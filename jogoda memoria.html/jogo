@@ -37,5 +37,51 @@ user-select:none; /*impede a selecao de texto ao clicar nas cartas */
         .matched {
             cursor: default;
         
+
+        }
+        button {
+            margin-top: 20px;
+        padding: 10px;
+        font-size: 16px; 
+        }
+        </style>
+        </head> 
+        <body>
+         <div class="grid" id="grid" ></div>
+         <button> id= "restartButton >recomecar o jogo </button> 
+         
+         <script>
+        const cardValues = ["A", "A", "B", "B", "C", "C","D","D","E","E", "F","F","G", "G","H","H" ];
+        const grid= document.getElementById("grid");
+        const restartButton=document.getElementById("restart button");
+        let firstCard= null;
+        let secondCard= null;
+        let lockBoard = false; //para evitar que o jogador cliqye durante a animacao
+
+        //embaralha o array
+        function shurffle(array) {
+            return array.sort(() => math.ramdom() - 0,5);
+
+        }
+    //cria o tabuleiro do jogo
+    function createBoard (){
+        grid.innerHTML= "";//l9impa o grid
+        const shurffledCards= shurffle ({...cardValues});//emaralha os valores
+        shurffledCards.forEach(value => {
+
+        const card =document.createElement("div");
+        card.classlist.add("card");
+        card. dataset.value=value;
+        card.addEventlistener("click", flipCard);
+        grid.appendChild(card);
+         });
+         resetGame();//reseta as variaveis do jogo
+        }
+        //funcoes vara vira a carta
+        function flipCard() {''
+            if (lockBoard || this.classlist.contains("fliped") || this.classList.contains)("matched"))return;
+            this.textContent= this.classList.content = this.dataset.value; //mostra o valor da carta
+            this. classList.add(flipped)
+        }
     
-}
+    
