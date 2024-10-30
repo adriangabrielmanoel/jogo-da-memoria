@@ -21,6 +21,8 @@ body {
     gap: 10px;
 }
 .card{
+width:100px;
+height: 100px;
 display: flax;
 align-items: center;
 justify-content: center;
