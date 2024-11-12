@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang = "pt-br">
+<head>
+<meta charset= "UTF-8">
+<META NAME= "viewport" content="width=device-width, initial-scale=1.0">
+<title> jogo da memoria </title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin:0;
+}
+.grid{
+    display:grid;
+    grid-template-columns: repeat(4, 100px);
+    gap: 10px;
+}
+.card{
+width:100px;
+height: 100px;
+display: flax;
+align-items: center;
+justify-content: center;
+background-color: #006bff;
+color: white;
+font-size:24px;
+user-select:none; /*impede a selecao de texto ao clicar nas cartas */
+}
+.fliped, .matched{
+    background-color: #4CAF50;
+}
+        .matched {
+            cursor: default;
+        
+
+        }
+        button {
+            margin-top: 20px;
+        padding: 10px;
+        font-size: 16px; 
+        }
+        </style>
+        </head> 
+        <body>
+         <div class="grid" id="grid" ></div>
+         <button> id="restartButton">recomecar o jogo</button> 
+         
+         <script>
+        const cardValues = ["A", "A", "B", "B", "C", "C","D","D","E","E", "F","F","G", "G","H","H" ];
+        const grid = document.getElementById("grid");
+        const restartButton = document.getElementById("restarButton");
+        let firstCard = null;
+        let secondCard = null;
+        let lockBoard = false; //para evitar que o jogador cliqye durante a animacao
+
+        //embaralha o array
+        function shuffle(array) {
+            return array.sort(() => math.random() - 0,5);
+
+        }
+    //cria o tabuleiro do jogo
+    function createBoard () {
+        grid.innerHTML= "";//limpa o grid
+        const shurffledCards = shurffle ({...cardValues});//emaralha os valores
+        shurffledCards.forEach(value => {
+
+        const card = document.createElement("div");
+        card.classlist.add("card");
+        card. dataset.value = value;
+        card.addEventlistener("click", flipCard);
+        grid.appendChild(card);
+         });
+         resetGame();//reseta as variaveis do jogo
+        }
+        //funcoes vara vira a carta
+        function flipCard() {
+            if (lockBoard || this.classlist.contains("flipped") || this.classlist.contains ("matched"))return;
+            this.textContent= this.classList.content = this.dataset.value; //mostra o valor da carta
+            this. classList.add(flipped)
+        
+         if (!firstCard) {
+            firstCard = this; // armazena a primeira carta
+         } else {
+            secondCard = this; //armazena a segunda carta
+            checkmat();// verifica se as cartas combinam
+             }
+           }
+         //funcoes para verificar se as cartas combinam
+         function checkmatch() {
+        lockBoard = true; // bloqueia o tabuleiro
+
+
+    if (firstCard.dataset.value === secondCard.dataset.value){
+       firstCard.classList.add("matched");
+       secondCard.classList.add("matched");
+       resetCards(); 
+    } else {
+        //adiciona o tempo para desvirar as cartas se nao forem iguais
+    setTimeout  (() => {
+        firstCard.textContent = ""; //esconde o valor da primeira carta
+        secondCard.textContent = " "; //esconde o valor da segunda carta
+        firstCard.classList.remove("flipped"); // remove  classe de virada da primeira carta
+        secondCard.classlist.remove("flipped"); //remove a classe de virada da segunda carta
+        resetCards(); //reseta as cartas
+    }, 1000);
+          }
+         }
+         //reseta as cartas e o estado de jogo
+         function resetCards() {
+            firstCard= null; //reseta a primeira carta 
+            secondCard= null;// reseta segunda carta
+            lockBoard= false; // libera o tabuleiro
+         }
+
+         //reseta o jogo
+         function resetGame(){
+            firstCard = null; // reset a primeira carta
+            secondCard = null;//reseta a segunda carta
+            lockBoard = false; //libera o tabuleiro
+         }
+         
+         //renicia o jogo
+         restartButton.addEventlistener("click", createBoard);
+
+         //inicia o jogo
+         createBoard();
+        </script>
+        </body>
+        </html>
